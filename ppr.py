@@ -79,7 +79,7 @@ def main(argv):
         if new_file == "":
             new_file = to_file
         else:
-            new_file = "new-" + to_file
+            new_file = "new- " + to_file
         fill_to_file(new_file, "new-" + to_file, from_items)
 
 if __name__ == '__main__':
