@@ -13,14 +13,14 @@ def get_files(argv):
     try:
         opts, args = getopt.getopt(argv, "hf:t:", ["from_file=", "to_file="])
     except getopt.GetoptError:
-        print('ppr.py -f <from_file> -t <to_file>')
+        print('ppr.py -f <from_file1<,from_file2>,<from_file3>...> -t <to_file>')
         sys.exit(2)
 
     for opt, arg in opts:
         if opt == '-h':
             print('test.py -f <from_file> -t <to_file>')
             sys.exit()
-        elif opt in ("-f", "--from_file"):
+        elif opt in ("-f", "--from_files"):
             from_file = arg
         elif opt in ("-t", "--to_file"):
             to_file = arg
@@ -52,12 +52,7 @@ def find_row_by_code(ws, code):
             return row
 
 
-def fill_item(ws, row, item):
-    for i in item:
-        ws[row][i + 1] = item
-
-
-def fill_to_file(to_file, from_items):
+def fill_to_file(to_file, final_file, from_items):
     # MUSTN'T change data_only to True
     wb = load_workbook(filename=to_file, data_only=False)
     ws = wb[WORK_BOOK_NAME]
@@ -67,18 +62,25 @@ def fill_to_file(to_file, from_items):
         row = find_row_by_code(ws, key)
 
         for i in range(len(value)):
-            ws[row][i + 1].value = value[i]
-    wb.save("new-" + to_file)
+            if value[i] != "":
+                ws[row][i + 1].value = value[i]
+    wb.save(final_file)
 
 def main(argv):
-    from_file, to_file = get_files(argv)
-
-    from_items = get_from_items(from_file)
-
-    logging.info('total people: %s', len(from_items))
-    logging.debug(from_items)
-
-    fill_to_file(to_file, from_items)
+    from_files, to_file = get_files(argv)
+    from_file_list = from_files.split(",")
+    new_file = ""
+    for from_file in from_file_list:
+        from_items = get_from_items(from_file)
+        logging.info('from file: %s',from_file)
+        logging.info('to file: %s',to_file)
+        logging.info('total people: %s', len(from_items))
+        logging.debug(from_items)
+        if new_file == "":
+            new_file = to_file
+        else:
+            new_file = "new-" + to_file
+        fill_to_file(new_file, "new-" + to_file, from_items)
 
 if __name__ == '__main__':
     logger = logging.getLogger('ppr_logger')
