@@ -20,9 +20,9 @@ def get_files(argv):
         if opt == '-h':
             print('test.py -f <from_file> -t <to_file>')
             sys.exit()
-        elif opt in ("-f", "--from_files"):
+        elif opt in ("-f", "--f", "--from_files"):
             from_file = arg
-        elif opt in ("-t", "--to_file"):
+        elif opt in ("-t", "--t", "--to_file"):
             to_file = arg
     return from_file, to_file
 
@@ -79,7 +79,7 @@ def main(argv):
         if new_file == "":
             new_file = to_file
         else:
-            new_file = "new- " + to_file
+            new_file = "new-" + to_file
         fill_to_file(new_file, "new-" + to_file, from_items)
 
 if __name__ == '__main__':

@@ -1,1 +1,2 @@
-python ppr.py --f %1 --t %2
+rem python ppr.py --f %1 --t %2
+C:\python_env\ppr\Scripts\python ppr.py -f "Performance_rating-Alpha.xlsx,Performance_rating-ARCH.xlsx,Performance_rating-BA.xlsx,Performance_rating-Beta.xlsx,Performance_rating-Delta.xlsx,Performance_rating-Doc.xlsx,Performance_rating-NWM.xlsx,Performance_rating-Omega.xlsx,Performance_rating-LABS.xlsx" -t "Performance_rating-RND.xlsx"
